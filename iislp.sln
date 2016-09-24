@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IISLP.Core", "IISLP.Core\IISLP.Core.xproj", "{6B322B39-FB6A-42C7-A36A-490C9BA52838}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IISLP.Web", "IISLP.Web\IISLP.Web.xproj", "{11890A30-58BC-45FF-B844-1E03037603BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B322B39-FB6A-42C7-A36A-490C9BA52838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B322B39-FB6A-42C7-A36A-490C9BA52838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B322B39-FB6A-42C7-A36A-490C9BA52838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B322B39-FB6A-42C7-A36A-490C9BA52838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11890A30-58BC-45FF-B844-1E03037603BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11890A30-58BC-45FF-B844-1E03037603BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11890A30-58BC-45FF-B844-1E03037603BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11890A30-58BC-45FF-B844-1E03037603BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
