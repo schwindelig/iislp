@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,6 +32,8 @@ namespace IISLP.Web
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+
+            services.Configure<FormOptions>(o => o.MultipartBodyLengthLimit = 1073741824);
 
             services.AddMemoryCache();
             services.AddSession();
