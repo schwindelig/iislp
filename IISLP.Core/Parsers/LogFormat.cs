@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace IISLP.Core.Parsers
+﻿namespace IISLP.Core.Parsers
 {
     // Refer: https://msdn.microsoft.com/en-us/library/ms525807(v=vs.90).aspx
     public enum LogFormat

@@ -1,15 +1,11 @@
-﻿using System;
+﻿using IISLP.Core.Services;
+using IISLP.Web.Extensions;
+using IISLP.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using IISLP.Web.Models;
-using Microsoft.AspNetCore.Http;
-using IISLP.Core.Services;
-using IISLP.Core.Parsers;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Newtonsoft.Json;
-using IISLP.Web.Extensions;
 
 namespace IISLP.Web.Controllers
 {
@@ -49,7 +45,7 @@ namespace IISLP.Web.Controllers
                                     })
                                 });
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 throw new Exception($"Failed to analyze file {file.FileName}.", e);
                             }
@@ -58,7 +54,7 @@ namespace IISLP.Web.Controllers
                         TempData.Put("result", resultVm);
                         return this.RedirectToAction(nameof(Result));
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         ModelState.AddModelError("Files", e.Message);
                     }
@@ -68,7 +64,7 @@ namespace IISLP.Web.Controllers
                     ModelState.AddModelError(string.Empty, "No files provided");
                 }
             }
-            
+
             return View(model);
         }
 

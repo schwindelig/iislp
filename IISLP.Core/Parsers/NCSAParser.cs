@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IISLP.Core.Models;
-using System.Text.RegularExpressions;
+﻿using IISLP.Core.Models;
+using System;
 
 namespace IISLP.Core.Parsers
 {
-    // refer: 
+    // refer:
     //      https://msdn.microsoft.com/en-us/library/ms525807(v=vs.90).aspx#Anchor_2
     //      http://www.loganalyzer.net/log-analyzer/apache-common-log.html
     public class NCSAParser : BaseParser

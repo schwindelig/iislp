@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IISLP.Web.Extensions
 {
-    // refer  
+    // refer
     //      https://github.com/aspnet/Mvc/issues/2276
     //      https://github.com/aspnet/Mvc/issues/2850
     //      http://stackoverflow.com/a/35042391

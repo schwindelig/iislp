@@ -1,7 +1,6 @@
 ﻿using IISLP.Core.Models;
 using IISLP.Core.Parsers;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -38,12 +37,15 @@ namespace IISLP.Core.Services
                 case LogFormat.W3C:
                     parser = new W3CParser();
                     break;
+
                 case LogFormat.IIS:
                     parser = new IISParser();
                     break;
+
                 case LogFormat.NCSA:
                     parser = new NCSAParser();
                     break;
+
                 default:
                     throw new Exception($"Unknown log format: {format}");
             }

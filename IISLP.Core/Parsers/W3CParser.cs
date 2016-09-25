@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IISLP.Core.Models;
-using System.IO;
-using System.Net;
+﻿using IISLP.Core.Models;
+using System;
 
 namespace IISLP.Core.Parsers
 {
@@ -51,7 +46,7 @@ namespace IISLP.Core.Parsers
                 if (this.FieldIndexClientIp.HasValue)
                 {
                     string[] values = line.Split(ENTRY_DELIMITER);
-                    if(values.Length > this.FieldIndexClientIp)
+                    if (values.Length > this.FieldIndexClientIp)
                     {
                         string ipStr = values[this.FieldIndexClientIp.Value];
                         return this.BuildLogEntry(ipStr);
