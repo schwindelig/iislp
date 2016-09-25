@@ -1,4 +1,5 @@
 ﻿using IISLP.Core.Parsers;
+using IISLP.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,13 +14,18 @@ namespace IISLP.CLI
     {
         public static void Main(string[] args)
         {
+            MainAsync(args).Wait();
+        }
+
+        public static async Task MainAsync(string[] args)
+        {
             var stopwatch = Stopwatch.StartNew();
 
-            string format = args[0];
+            string formatStr = args[0];
             string path = args[1];
 
             Console.WriteLine($"Parsing {path}");
-            Console.WriteLine($"Log format: {format}\r\n");
+            Console.WriteLine($"Log format: {formatStr}\r\n");
 
             if (!File.Exists(path))
             {
@@ -27,37 +33,25 @@ namespace IISLP.CLI
                 return;
             }
 
-            ILogParser parser = null;
-            switch (format.ToLower())
+            LogFormat format;
+            switch (formatStr.ToLower())
             {
                 case "w3c":
-                    parser = new W3CParser();
+                    format = LogFormat.W3C;
                     break;
                 case "iis":
-                    parser = new IISParser();
+                    format = LogFormat.IIS;
                     break;
                 case "ncsa":
-                    parser = new NCSAParser();
+                    format = LogFormat.NCSA;
                     break;
                 default:
-                    Console.WriteLine($"Uknown format ${format}");
+                    Console.WriteLine($"Uknown format ${formatStr}");
                     return;
             }
 
-            var items = parser.ParseLog(path).ToList();
-            var measure = stopwatch.ElapsedMilliseconds;
-
-            var distinctIps = items.Select(c => c.ClientIP).Distinct();
-
-            Console.WriteLine($"Total items: {items.Count()}");
-            Console.WriteLine($"Distinct items: {distinctIps.Count()}");
-            foreach (var item in distinctIps)
-            {
-                Console.WriteLine(item);
-            }
-            
-            Console.WriteLine($"\r\nFile processed in {measure}ms");
-            Console.WriteLine($"Total time: {stopwatch.ElapsedMilliseconds}ms");
+            var analyzer = new Analyzer();
+            var clientInfos = await analyzer.AnalyzeLog(path, format);
         }
     }
 }

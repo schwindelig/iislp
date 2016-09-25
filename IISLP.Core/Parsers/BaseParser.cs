@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace IISLP.Core.Parsers
 {
-    public abstract class BaseParser : ILogParser
+    public abstract class BaseParser
     {
         public virtual IEnumerable<LogEntry> ParseLog(string path)
         {

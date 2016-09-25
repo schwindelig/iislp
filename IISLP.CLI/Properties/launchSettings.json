@@ -2,7 +2,7 @@
   "profiles": {
     "IISLP.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "ncsa c:\\temp\\ncsa-sample.log"
+      "commandLineArgs": "w3c c:\\temp\\w3c-sample-provided.log"
     }
   }
 }
