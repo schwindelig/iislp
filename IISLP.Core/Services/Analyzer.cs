@@ -59,23 +59,9 @@ namespace IISLP.Core.Services
         {
             try
             {
-                Console.WriteLine("-> Resolving " + ip);
-                var res = await Dns.GetHostEntryAsync(ip);
-                Console.WriteLine("--> Resolved " + ip + " to " + res.HostName);
-                return res;
+                return await Dns.GetHostEntryAsync(ip);
             }
             catch { return null; }
-        }
-
-        protected async Task ResolveIP(ClientData clientData)
-        {
-            Console.WriteLine("Resolving " + clientData.IP);
-            try
-            {
-                clientData.HostEntry = await Dns.GetHostEntryAsync(clientData.IP);
-                Console.WriteLine("Resolved " + clientData.HostEntry.HostName);
-            }
-            catch (Exception e) { Console.WriteLine("Exception: " + e); }
         }
     }
 }
