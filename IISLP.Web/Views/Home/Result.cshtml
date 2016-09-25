@@ -1,0 +1,38 @@
+﻿@model IISLP.Web.Models.ResultVm
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Result</h2>
+
+        @foreach (var log in Model.Logs)
+        {
+            <h3>@log.File</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>IP</th>
+                        <th>FQDN</th>
+                        <th>Requests</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var client in log.Clients)
+                    {
+                        <tr>
+                            <td>@client.IP</td>
+                            <td>@client.FQDN</td>
+                            <td>@client.RequestCount</td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Sum: @log.Clients.Sum(c => c.RequestCount)</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

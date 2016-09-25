@@ -36,6 +36,9 @@ namespace IISLP.Web
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
+            services.AddMemoryCache();
+            services.AddSession();
+
             services.AddMvc();
         }
 
@@ -60,6 +63,8 @@ namespace IISLP.Web
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

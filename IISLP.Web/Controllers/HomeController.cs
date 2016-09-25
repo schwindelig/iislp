@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using IISLP.Web.Models;
+using Microsoft.AspNetCore.Http;
+using IISLP.Core.Services;
+using IISLP.Core.Parsers;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Newtonsoft.Json;
+using IISLP.Web.Extensions;
 
 namespace IISLP.Web.Controllers
 {
@@ -13,18 +20,63 @@ namespace IISLP.Web.Controllers
             return View();
         }
 
-        public IActionResult About()
+        [HttpPost]
+        public async Task<ActionResult> Index(UploadFilesVM model)
         {
-            ViewData["Message"] = "Your application description page.";
+            if (ModelState.IsValid)
+            {
+                if (model.Files != null && model.Files.Any())
+                {
+                    var resultVm = new ResultVm() { Logs = new List<ResultLogVm>() };
 
-            return View();
+                    var analyzer = new Analyzer();
+                    try
+                    {
+                        foreach (var file in model.Files)
+                        {
+                            try
+                            {
+                                var res = await analyzer.AnalyzeLog(file.OpenReadStream(), model.Format);
+
+                                resultVm.Logs.Add(new ResultLogVm
+                                {
+                                    File = file.FileName,
+                                    Clients = res.Select(r => new ResultClientVm
+                                    {
+                                        FQDN = r.FQDN,
+                                        IP = r.IP.ToString(),
+                                        RequestCount = r.RequestCount
+                                    })
+                                });
+                            }
+                            catch(Exception e)
+                            {
+                                throw new Exception($"Failed to analyze file {file.FileName}.", e);
+                            }
+                        }
+
+                        TempData.Put("result", resultVm);
+                        return this.RedirectToAction(nameof(Result));
+                    }
+                    catch(Exception e)
+                    {
+                        ModelState.AddModelError("Files", e.Message);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "No files provided");
+                }
+            }
+            
+            return View(model);
         }
 
-        public IActionResult Contact()
+        public ActionResult Result()
         {
-            ViewData["Message"] = "Your contact page.";
+            var model = TempData.Get<ResultVm>("result");
 
-            return View();
+            return View(model);
         }
 
         public IActionResult Error()

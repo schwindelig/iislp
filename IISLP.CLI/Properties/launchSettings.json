@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "IISLP.CLI": {
-      "commandName": "Project",
-      "commandLineArgs": "w3c c:\\temp\\w3c-sample-provided.log"
-    }
-  }
-}

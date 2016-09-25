@@ -11,29 +11,26 @@ namespace IISLP.Core.Parsers
 {
     public abstract class BaseParser
     {
-        public virtual IEnumerable<LogEntry> ParseLog(string path)
+        public virtual IEnumerable<LogEntry> ParseLog(Stream stream)
         {
-            using (var file = File.OpenRead(path))
+            using (var reader = new StreamReader(stream))
             {
-                using (var reader = new StreamReader(file))
+                int lineCounter = 0;
+                while (reader.Peek() >= 0)
                 {
-                    int lineCounter = 0;
-                    while (reader.Peek() >= 0)
+                    LogEntry entry = null;
+                    try
                     {
-                        LogEntry entry = null;
-                        try
-                        {
-                            entry = this.ProcessLine(reader.ReadLine());
-                        }
-                        catch(Exception e)
-                        {
-                            throw new Exception($"Failed to parse line {lineCounter}.", e);
-                        }
+                        entry = this.ProcessLine(reader.ReadLine());
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception($"Failed to parse line {lineCounter}.", e);
+                    }
 
-                        if (entry != null)
-                        {
-                            yield return entry;
-                        }
+                    if (entry != null)
+                    {
+                        yield return entry;
                     }
                 }
             }

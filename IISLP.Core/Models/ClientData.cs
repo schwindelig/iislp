@@ -12,7 +12,13 @@ namespace IISLP.Core.Models
 
         public IPHostEntry HostEntry { get; set; }
 
-        public string FQDN { get; set; }
+        public string FQDN
+        {
+            get
+            {
+                return this.HostEntry?.HostName ?? "N/A";
+            }
+        }
 
         public int RequestCount { get; set; }
     }

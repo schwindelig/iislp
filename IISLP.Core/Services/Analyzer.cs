@@ -11,7 +11,7 @@ namespace IISLP.Core.Services
 {
     public class Analyzer
     {
-        public Task<ClientData[]> AnalyzeLog(string path, LogFormat format)
+        public Task<ClientData[]> AnalyzeLog(Stream stream, LogFormat format)
         {
             // bug .net core: https://github.com/dotnet/corefx/issues/10024
             var bug10024 = new System.Net.Sockets.Socket(System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
@@ -19,19 +19,15 @@ namespace IISLP.Core.Services
             BaseParser parser = null;
             parser = GetParserForFormat(format);
 
-            if (File.Exists(path))
+            var logEntries = parser.ParseLog(stream);
+            var result = Task.WhenAll(logEntries.GroupBy(l => l.ClientIP).Select(async g => new ClientData
             {
-                var logEntries = parser.ParseLog(path);
-                var result = Task.WhenAll(logEntries.GroupBy(l => l.ClientIP).Select(async g => new ClientData
-                {
-                    IP = g.Key,
-                    RequestCount = g.Count(),
-                    HostEntry = await this.GetHostEntry(g.Key)
-                }));
+                IP = g.Key,
+                RequestCount = g.Count(),
+                HostEntry = await this.GetHostEntry(g.Key)
+            }));
 
-                return result;
-            }
-            else throw new Exception($"File {path} cannot be found.");
+            return result;
         }
 
         private static BaseParser GetParserForFormat(LogFormat format)
